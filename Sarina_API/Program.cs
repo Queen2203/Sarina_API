@@ -3,10 +3,17 @@ using Microsoft.Extensions.Hosting.Internal;
 using Sarina_API.Models;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Hosting.Internal;
+using Microsoft.Extensions.FileProviders;
+using Microsoft.AspNetCore.Http.Features;
 
 var builder = WebApplication.CreateBuilder(args);
 
-
+//builder.Services.Configure<FormOptions>(o =>
+//{
+//    o.ValueLengthLimit = int.MaxValue;
+//    o.MultipartBodyLengthLimit = int.MaxValue;
+//    o.MemoryBufferThreshold = int.MaxValue;
+//});
 
 // Add services to the container.
 builder.Services.AddControllersWithViews(options => options.SuppressImplicitRequiredAttributeForNonNullableReferenceTypes = true);
@@ -39,6 +46,11 @@ app.UseAuthorization();
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
+//app.UseStaticFiles(new StaticFileOptions()
+//{
+//    FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), @"Resources")),
+//    RequestPath = new PathString("/Resources")
+//});
 
 app.UseRouting();
 

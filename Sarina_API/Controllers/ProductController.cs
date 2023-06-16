@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Hosting;
 using Sarina_API.Models.Enum;
 using Microsoft.Extensions.Hosting;
 using IHostingEnvironment = Microsoft.AspNetCore.Hosting.IHostingEnvironment;
+using System.ComponentModel.Design;
 
 namespace Sarina_API.Controllers
 {
@@ -110,6 +111,27 @@ namespace Sarina_API.Controllers
                     msg = "product added successfully"
                 };
                 return Ok(response);
+            }
+            catch (Exception ex)
+            {
+                var response = new
+                {
+                    status = 0,
+                    msg = "OOPS! Something went wrong",
+                    error = new Exception(ex.Message, ex.InnerException)
+                };
+                return Ok(response);
+            }
+        }
+        [HttpGet("getProductLink")]
+
+        public IActionResult getProductLink(int id)
+        {
+            try
+            {
+                List<ProductImage> productImages = db.ProductImages.Where(x => x.Id == id).ToList();
+
+                return Ok(productImages);
             }
             catch (Exception ex)
             {
